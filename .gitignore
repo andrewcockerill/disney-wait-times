@@ -1,6 +1,9 @@
 # Don't push raw data to github, should be pulled from source code
 *.csv
 *.txt
+*.xlsx
+*.xls
+*.db
 
 # Notebook checkpoints
 .ipynb_checkpoints
