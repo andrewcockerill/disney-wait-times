@@ -5,6 +5,11 @@
 *.xls
 *.db
 
-# Notebook checkpoints
+# Notebook checkpoints, cache
 .ipynb_checkpoints
 */.ipynb_checkpoints/*
+__pycache__/
+*.pyc
+
+# Constants
+constants.py
