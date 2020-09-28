@@ -40,6 +40,7 @@ def fetch_one_wait_time_hist(url, attraction_name):
     wait_times.loc[:,'datetime'] = pd.to_datetime(wait_times.datetime, format='%Y-%m-%d %H:%M:%S')
     wait_times['month_of_year'] = wait_times.datetime.dt.month
     wait_times['day_of_month'] = wait_times.datetime.dt.day
+    wait_times['day_of_week'] = wait_times.datetime.dt.dayofweek
     wait_times['hour_of_day'] = wait_times.datetime.dt.hour
     wait_times['minute_of_day'] = wait_times.datetime.dt.minute
     wait_times['year_of_calendar'] = wait_times.datetime.dt.year
@@ -52,7 +53,7 @@ def fetch_one_wait_time_hist(url, attraction_name):
     wait_times['attraction_name'] = attraction_name
     
     # Output data
-    wait_times = wait_times[['attraction_name','date_id','month_of_year','day_of_month','hour_of_day','minute_of_day','year_of_calendar','wait_time']]
+    wait_times = wait_times[['attraction_name','date_id','month_of_year','day_of_month','day_of_week','hour_of_day','minute_of_day','year_of_calendar','wait_time']]
     return wait_times
 
 def fetch_all_wait_time_hist():
@@ -239,7 +240,7 @@ def fetch_bls_hist(api_key):
     
     payload = json.dumps({
         "seriesid": series_list,
-        "startyear": "2015",
+        "startyear": "2014",
         "endyear": "2019",
         "registrationkey": api_key
         })
