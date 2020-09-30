@@ -9,6 +9,7 @@ SELECT
 	, B.tmax
 	, CASE
 		WHEN A.date_id = C.date_id THEN 1 ELSE 0 END AS holiday_ind
+	, CAST(julianday(A.date_id) - julianday(C.date_id) AS INT) AS days_tofrom_holiday
 	, ROUND(E.unemp_local - D.unemp_local,3) AS unemp_local_change
 	, ROUND(E.unemp_natl - D.unemp_natl,3) AS unemp_natl_change
 	, ROUND(E.cpi_natl - D.cpi_natl,3) AS cpi_natl_change
@@ -21,7 +22,7 @@ LEFT JOIN
 	ON A.date_id = B.date_id
 LEFT JOIN
 	T_HOLIDAYS C
-	ON A.date_id = C.date_id
+	ON ABS(julianday(A.date_id) - julianday(C.date_id)) <= 5
 LEFT JOIN
 	T_BLS_STATS D
 	ON (
@@ -31,7 +32,7 @@ LEFT JOIN
 LEFT JOIN
 	T_BLS_STATS E
 	ON (
-		(A.year_of_calendar = E.year_of_calendar AND A.month_of_year - E.month_of_year = 3) OR
+		(A.year_of_calendar = E.year_of_calendar AND A.month_of_year - E.month_of_year = 4) OR
 		(A.year_of_calendar - E.year_of_calendar = 1 AND A.month_of_year - E.month_of_year = -8)
 	)
 LEFT JOIN
